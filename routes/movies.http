@@ -1,0 +1,13 @@
+###
+GET http://localhost:9000/api/movies
+###
+GET http://localhost:9000/api/movie/573a1391f29313caabcd73f4
+###
+GET http://localhost:9000/api/theaters
+###
+GET http://localhost:9000/api/theater/59a47286cfa9a3a73e51e72c
+
+###
+GET http://localhost:9000/api/users
+###
+GET http://localhost:9000/api/user/59a47286cfa9a3a73e51e72c
