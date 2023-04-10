@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
    "pageSize" : 1,
-   "limit": 1
+   "limit": 30
 }
 
 ###
@@ -12,8 +12,7 @@ post http://localhost:9000/api/searchbytext
 Content-Type: application/json
 
 {
-   "pageSize" : 1,
-   "filter" : {"searchText": "cops"} 
+   "searchText" : "100", 
 }
 ###
 GET http://localhost:9000/api/movie/573a1391f29313caabcd73f4
