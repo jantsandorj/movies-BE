@@ -30,7 +30,7 @@ const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const rowcount = yield movies_model_1.default.find(filterText).count();
         const skips = 30 * (pageSize - 1);
         const result = yield movies_model_1.default.find(filterText)
-            .select({ title: 1, plot: 1, fullplot: 1 })
+            .select({ title: 1, plot: 1, fullplot: 1, poster: 1 })
             .sort({ title: 1 })
             .skip(skips).limit(30);
         res.json({ status: true, totalRows: rowcount, result });

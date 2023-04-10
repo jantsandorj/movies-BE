@@ -17,7 +17,7 @@ const getAll = async (req : Request, res: Response) => {
     const rowcount = await Movie.find(filterText).count()
     const skips = 30 * (pageSize-1)
     const result = await Movie.find(filterText)
-    .select({title:1, plot:1, fullplot:1})
+    .select({title:1, plot:1, fullplot:1, poster:1})
     .sort({title:1})
     .skip(skips).limit(30)
     res.json({ status: true, totalRows : rowcount, result });
