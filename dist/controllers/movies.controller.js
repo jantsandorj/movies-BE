@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.create = exports.getOne = exports.getAll = void 0;
+exports.searchTextBy = exports.create = exports.getOne = exports.getAll = void 0;
 const movies_model_1 = __importDefault(require("../models/movies.model"));
 const create = (req, res) => {
     const { name, type, price } = req.body;
@@ -20,26 +20,45 @@ const create = (req, res) => {
 };
 exports.create = create;
 const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { pageSize, filter } = req.body;
-    const filterText = { $or: filter && filter.searchText && [
-            { title: { $regex: filter.searchText } },
-            { flot: { $regex: filter.searchText } },
-            { fullplot: { $regex: filter.searchText } }
-        ] };
+    const { pageSize, limit } = req.body;
+    console.log(req.body);
     try {
-        const rowcount = yield movies_model_1.default.find(filterText).count();
-        const skips = 30 * (pageSize - 1);
-        const result = yield movies_model_1.default.find(filterText)
-            .select({ title: 1, plot: 1, fullplot: 1, poster: 1 })
-            .sort({ title: 1 })
-            .skip(skips).limit(30);
-        res.json({ status: true, totalRows: rowcount, result });
+        const rowCount = yield movies_model_1.default.find().count();
+        const skips = 28 * (pageSize - 1);
+        const result = yield movies_model_1.default.find()
+            .select({ title: 1, plot: 1, poster: 1, tomatoes: 1 })
+            .sort({ _id: 1 })
+            .skip(skips)
+            .limit(limit ? limit : 28);
+        if (result) {
+            res.json({ status: true, result, totalRows: rowCount });
+        }
+        else {
+            res.json({ status: false, message: "Rows not found" });
+        }
     }
     catch (err) {
-        res.json({ status: false, message: err });
+        console.log(err);
+        res.json({ status: true, message: "Test" });
     }
 });
 exports.getAll = getAll;
+const searchTextBy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { searchText } = req.body;
+    try {
+        const result = yield movies_model_1.default.find({});
+        if (result) {
+            res.json({ status: true, result });
+        }
+        else {
+            res.json({ status: false, message: "Not found" });
+        }
+    }
+    catch (err) {
+        res.json({ status: true, message: "Test" });
+    }
+});
+exports.searchTextBy = searchTextBy;
 const getOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { _id } = req.params;
     try {
