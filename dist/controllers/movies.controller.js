@@ -46,7 +46,7 @@ exports.getAll = getAll;
 const searchTextBy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { searchText } = req.body;
     try {
-        const result = yield movies_model_1.default.find({});
+        const result = yield movies_model_1.default.find({ $filter: { $regex: { searchText } } });
         if (result) {
             res.json({ status: true, result });
         }

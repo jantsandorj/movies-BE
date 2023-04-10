@@ -37,7 +37,7 @@ const getAll = async (req: Request, res: Response): Promise<void> => {
 const searchTextBy = async (req: Request, res: Response) => {
   const { searchText } = req.body;
   try {
-    const result = await Movie.find({});
+    const result = await Movie.find({$filter: {$regex : {searchText}}});
 
     if (result) {
       res.json({ status: true, result });
