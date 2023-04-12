@@ -31,7 +31,7 @@ const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             .skip(skips)
             .limit(limit ? limit : 28);
         if (result) {
-            res.json({ status: true, result, totalRows: rowCount });
+            res.json({ status: true, result, totalRows: rowCount, pageSize });
         }
         else {
             res.json({ status: false, message: "Rows not found" });
